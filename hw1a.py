@@ -17,4 +17,5 @@ match mode:
     case "fan":
         print(troom)
     case _:
-        raise ValueError("Incorrect mode")
+        raise ValueError("Incorrect mode") 
+    
