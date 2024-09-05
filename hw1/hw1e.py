@@ -34,8 +34,8 @@ def solve(apt_test, n_floors, apt, entry, floor) -> tuple:
             return 0, 1
         return 1, 1
     # 1-floor case
-    if n_floors == 1:
-        n_perfloor = (apt - 1) // cum_floor + 1
+    # if n_floors == 1:
+    #     n_perfloor = (apt - 1) // cum_floor + 1
 
     # general case
     n_perfloor_min = (apt - 1) // cum_floor + 1
