@@ -24,7 +24,7 @@ def solve(k1_flat, m, k2_flat, i2, j2):
         # k2_flat = i2 * m * n + j2 * n + k2
         # k2_flat = (i2 * m + j2) * n + k2
         # n = k2_flat // (i2 * m + j2)
-        if any(k2_flat < j2_flat, j2_flat < i2, k2_flat < i2):
+        if any([k2_flat < j2_flat, j2_flat < i2, k2_flat < i2]):
             return -2, -2  # controversal
         n = k2_flat // j2_flat
         k2 = k2_flat % j2_flat
