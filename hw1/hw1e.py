@@ -8,10 +8,6 @@ def solve(apt_test, n_floors, apt, entry, floor) -> tuple:
     if amiguous i1, then (-1, j1) \n
     if ambiguous j1, then (i1, -1) \n
     """
-    print(f"number of floors: {n_floors}")
-    print(f"apt: {apt}")
-    print(f"floor: {floor}")
-    print(f"entry: {entry}")
     # k_flat = i * n_floors * n_perfloor + j * n_perfloor + k
     k_flat_test = apt_test - 1  # index of apartment for event 1
     k_flat = apt - 1  # index of apartment for event 2
@@ -52,8 +48,6 @@ def solve(apt_test, n_floors, apt, entry, floor) -> tuple:
         if max_last_floor_population % (cum_floor - 1) == 0:
             delta -= 1
     n_perfloor_max = n_perfloor_min + delta
-    print(f"n_perfloor_min: {n_perfloor_min}")
-    print(f"n_perfloor_max: {n_perfloor_max}")
     if n_perfloor_min == n_perfloor_max:
         # no ambiguity
         n_perfloor = n_perfloor_max
