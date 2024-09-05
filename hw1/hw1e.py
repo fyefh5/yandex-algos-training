@@ -1,5 +1,4 @@
-# k1_flat, m, k2_flat, i2, j2 = list(map(int, input().split()))
-k1_flat, m, k2_flat, i2, j2 = list(map(int, "100 2 11 1 2".split()))
+k1_flat, m, k2_flat, i2, j2 = list(map(int, input().split()))
 k1_flat -= 1  # index of apartment for event 1
 k2_flat -= 1  # index of apartment for event 2
 i2 -= 1  # index of entry for event 2
