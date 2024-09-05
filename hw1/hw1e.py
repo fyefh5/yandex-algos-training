@@ -55,7 +55,14 @@ def solve(apt_test, n_floors, apt, entry, floor) -> tuple:
         floor_test = k_flat_test // n_perfloor % n_floors + 1
         return entry_test, floor_test
     # ambiguous case
-    return 0, 0
+    entry_test = k_flat_test // n_perfloor_min // n_floors + 1
+    floor_test = k_flat_test // n_perfloor_min % n_floors + 1
+    for n_perfloor in range(n_perfloor_min+1, n_perfloor_max+1):
+        if k_flat_test // n_perfloor // n_floors + 1 != entry_test:
+            entry_test = 0
+        if k_flat_test // n_perfloor % n_floors + 1 != floor_test:
+            floor_test = 0
+    return entry_test, floor_test
 
 
 ans = solve(apt_test, n_floors, apt, entry, floor)
