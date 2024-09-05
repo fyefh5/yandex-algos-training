@@ -14,7 +14,7 @@ j2 -= 1  # index of floor for event 2
 
 
 def solve(k1_flat, m, k2_flat, i2, j2):
-    if any(k1_flat < 0, m < 1, k2_flat < 0, i2 < 0, j2 < 0):
+    if any([k1_flat < 0, m < 1, k2_flat < 0, i2 < 0, j2 < 0]):
         return -2, -2
     if j2 >= m:
         return -2, -2  # controversal
