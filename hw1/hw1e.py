@@ -1,4 +1,5 @@
-k1_flat, m, k2_flat, i2, j2 = list(map(int, input().split()))
+# k1_flat, m, k2_flat, i2, j2 = list(map(int, input().split()))
+k1_flat, m, k2_flat, i2, j2 = list(map(int, "100 2 11 1 2".split()))
 k1_flat -= 1  # index of apartment for event 1
 k2_flat -= 1  # index of apartment for event 2
 i2 -= 1  # index of entry for event 2
@@ -28,8 +29,8 @@ def solve(k1_flat, m, k2_flat, i2, j2):
             return -2, -2  # controversal
         n = k2_flat // j2_flat
         k2 = k2_flat % j2_flat
-        if k2_flat != i2 * m * n + j2 * n + k2:
-            return -2, -2  # controversal
+        if k2 >= n:
+            return -2, -2 # controversal
         # k1_flat = i1 * m * n + j1 * n + k1
         # k1_flat // n = i1*m + j1
         j1 = k1_flat // n % m
