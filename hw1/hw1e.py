@@ -37,6 +37,8 @@ def solve(k1_flat, m, k2_flat, i2, j2):
         return i1, j1
     i1 = 0 if k1_flat <= m else -1
     j1 = 0 if m == 1 else -1
+    if k1_flat == k2_flat:
+        return i2, j2
     return i1, j1
 
 
