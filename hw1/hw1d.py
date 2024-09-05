@@ -12,3 +12,5 @@ elif a == 0:
 else:
     if (c**2 - b)%a == 0:
         print((c**2 - b)//a)
+    else:
+        print("NO SOLUTIONS")
