@@ -1,46 +1,68 @@
-k1_flat, m, k2_flat, i2, j2 = list(map(int, input().split()))
-k1_flat -= 1  # index of apartment for event 1
-k2_flat -= 1  # index of apartment for event 2
-i2 -= 1  # index of entry for event 2
-j2 -= 1  # index of floor for event 2
-# m is the number of floors in the building
-
-# model:
-# house is the 3d-array where 1d - entries, 2d - floor, 3d - apt
-# house.shape = (entries, floors, apts)= (l, m, n), where only m is known
-# with coordinates for each dimension = i, j, k
-# flattened version for each apt is referred as k_flat
-# for each floor - j_flat
+apt_test, n_floors, apt, entry, floor = list(map(int, input().split()))
 
 
-def solve(k1_flat, m, k2_flat, i2, j2):
-    if any([k1_flat < 0, m < 1, k2_flat < 0, i2 < 0, j2 < 0]):
-        return -2, -2
-    if j2 >= m:
-        return -2, -2  # controversal
-    j2_flat = i2 * m + j2
-    if j2_flat > 0:
-        # from the 3d flattening formula, it is possible to find n
-        # k2_flat = i2 * m * n + j2 * n + k2
-        # k2_flat = (i2 * m + j2) * n + k2
-        # n = k2_flat // (i2 * m + j2)
-        if any([k2_flat < j2_flat, j2_flat < i2, k2_flat < i2]):
-            return -2, -2  # controversal
-        n = k2_flat // j2_flat
-        k2 = k2_flat % j2_flat
-        if k2 >= n:
-            return -2, -2 # controversal
-        # k1_flat = i1 * m * n + j1 * n + k1
-        # k1_flat // n = i1*m + j1
-        j1 = k1_flat // n % m
-        i1 = k1_flat // n // m
-        return i1, j1
-    i1 = 0 if k1_flat <= m else -1
-    j1 = 0 if m == 1 else -1
-    if k1_flat == k2_flat:
-        return i2, j2
-    return i1, j1
+def solve(apt_test, n_floors, apt, entry, floor) -> tuple:
+    """
+    returns (i1, j1) \n
+    if controversal, then (-2, -2) \n
+    if amiguous i1, then (-1, j1) \n
+    if ambiguous j1, then (i1, -1) \n
+    """
+    print(f"number of floors: {n_floors}")
+    print(f"apt: {apt}")
+    print(f"floor: {floor}")
+    print(f"entry: {entry}")
+    # k_flat = i * n_floors * n_perfloor + j * n_perfloor + k
+    k_flat_test = apt_test - 1  # index of apartment for event 1
+    k_flat = apt - 1  # index of apartment for event 2
+    i = entry - 1  # index of entry for event 2
+    j = floor - 1  # index of floor for event 2
+    # print(f"i: {i}")
+    # print(f"j: {j}")
+    # print(f"k_flat: {k_flat}")
+    # print(f"k_flat_test: {k_flat_test}")
+
+    # super wrong case
+    if floor > n_floors:
+        return -1, -1
+    # easy case
+    if n_floors == 1 and apt_test <= n_floors:
+        return 1, 1
+    cum_floor = i * n_floors + floor
+    # super wrong case
+    if apt < cum_floor:
+        return -1, -1
+    # ambiguous case
+    if cum_floor == 1:
+        if apt_test > apt:
+            return 0, 1
+        return 1, 1
+    # 1-floor case
+    if n_floors == 1:
+        n_perfloor = (apt - 1) // cum_floor + 1
+
+    # general case
+    n_perfloor_min = (apt - 1) // cum_floor + 1
+    max_last_floor_population = n_perfloor_min
+    if apt % n_perfloor_min > 0:
+        max_last_floor_population = apt % n_perfloor_min
+    delta = 0
+    if max_last_floor_population > (cum_floor - 1):
+        delta = max_last_floor_population // (cum_floor - 1)
+        if max_last_floor_population % (cum_floor - 1) == 0:
+            delta -= 1
+    n_perfloor_max = n_perfloor_min + delta
+    print(f"n_perfloor_min: {n_perfloor_min}")
+    print(f"n_perfloor_max: {n_perfloor_max}")
+    if n_perfloor_min == n_perfloor_max:
+        # no ambiguity
+        n_perfloor = n_perfloor_max
+        entry_test = k_flat_test // n_perfloor // n_floors + 1
+        floor_test = k_flat_test // n_perfloor % n_floors + 1
+        return entry_test, floor_test
+    # ambiguous case
+    return 0, 0
 
 
-i1, j1 = solve(k1_flat, m, k2_flat, i2, j2)
-print(" ".join(map(str, [i1 + 1, j1 + 1])))
+ans = solve(apt_test, n_floors, apt, entry, floor)
+print(" ".join(map(str, ans)))
