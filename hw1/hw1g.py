@@ -1,3 +1,5 @@
+import time
+
 def details(n, k, m):
     count = 0
     if k // m > 0:
@@ -19,11 +21,15 @@ def main():
     print(ans)
 
 def check():
+    start = time.time()
     for n in range(1, 201):
         for k in range(1, 201):
             for m in range(1, 201):
-                print(n,k,m,details(n,k,m))
+                details(n,k,m)
+    end = time.time()
+    print(f"executed in {end - start} sec")
+    
                 
 
 if __name__ == "__main__":
-    main()
+    check()
