@@ -2,10 +2,16 @@ def can(a, b, c, d, e):
     cond1 = (d >= a, d >= b, d >= c)
     cond2 = (e >= a, e >= b, e >= c)
     fits = 0
+    dfit = False
+    efit = False
     for i in range(3):
         if cond1[i] or cond2[i]:
             fits += 1
-    if fits >= 2:
+        if cond1[i]:
+            dfit = True
+        if cond2[i]:
+            efit = True
+    if fits >= 2 and dfit and efit:
         return "YES"
     return "NO"
 
