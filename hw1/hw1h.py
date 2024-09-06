@@ -20,7 +20,7 @@ def main():
     n = int(input())
     m = int(input())
     ans = waiting(a, b, n, m)
-    print(" ".join(map(str, ans)))
+    print(-1 if ans == -1 else " ".join(map(str, ans)))
 
 
 if __name__ == "__main__":
