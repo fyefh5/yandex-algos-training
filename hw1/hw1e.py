@@ -18,24 +18,21 @@ def solve(apt_test, n_floors, apt, entry, floor) -> tuple:
     # print(f"k_flat: {k_flat}")
     # print(f"k_flat_test: {k_flat_test}")
 
-    # super wrong case
+    # wrong case
     if floor > n_floors:
         return -1, -1
     # easy case
     if n_floors == 1 and apt_test <= n_floors:
         return 1, 1
     cum_floor = i * n_floors + floor
-    # super wrong case
+    # wrong case
     if apt < cum_floor:
         return -1, -1
-    # ambiguous case
+    # ambiguous n_perfloor
     if cum_floor == 1:
         if apt_test > apt:
             return 0, 1
         return 1, 1
-    # 1-floor case
-    # if n_floors == 1:
-    #     n_perfloor = (apt - 1) // cum_floor + 1
 
     # general case
     n_perfloor_min = (apt - 1) // cum_floor + 1
