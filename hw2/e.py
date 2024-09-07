@@ -5,35 +5,37 @@
 # Какое максимально высокое место мог занять Василий?
 
 
-def place(arr):
-    # find the most left winner position
+def place(scores):
+    # find the best vasya's score in 1 loop
     i_winner = 0
-    for i in range(1,len(arr)):
-        if arr[i] > arr[i_winner]:
+    i_best = None
+    for i in range(1, len(scores) - 1):
+        score = scores[i]
+        if score > scores[i_winner]:
             i_winner = i
-    # find all possible positions of vasya in the tournament order
-    i_vasya = []
-    for i in range(len(arr)-1):
-        if i_winner < i and arr[i] % 10 == 5 and arr[i] > arr[i+1]:
-            i_vasya.append(i)
-    if len(i_vasya) == 0:
+            i_best = None
+        else:
+            if score % 10 == 5 and scores[i + 1] < score:
+                if i_best is None:
+                    i_best = i
+                elif scores[i_best] < score:
+                    i_best = i
+    # case when all requirements can't be met
+    if i_best is None:
         return 0
-    # find max_score_vasya
-    max_score_vasya = arr[i_vasya[0]]
-    for i in i_vasya:
-        if arr[i] > max_score_vasya:
-            max_score_vasya = arr[i]
-    # find vasya's place in the leadership board
-    max_place_vasya = 1
-    for score in arr:
-        if score > max_score_vasya:
-            max_place_vasya += 1
-    return max_place_vasya
+    # find vasya's place in 1 loop
+    best_place = 1
+    best_score = scores[i_best]
+    for score in scores:
+        if score > best_score:
+            best_place += 1
+    return best_place
 
 
 assert place([10, 20, 15, 10, 30, 5, 1]) == 6
 assert place([15, 15, 10]) == 1
 assert place([10, 15, 20]) == 0
+assert place([555, 76, 661, 478, 889, 453, 555, 359, 601, 835]) == 5
 
 
 def main():
