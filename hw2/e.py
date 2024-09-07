@@ -14,12 +14,11 @@ def place(scores):
         if score > scores[i_winner]:
             i_winner = i
             i_best = None
-        else:
-            if score % 10 == 5 and scores[i + 1] < score:
-                if i_best is None:
-                    i_best = i
-                elif scores[i_best] < score:
-                    i_best = i
+        elif score % 10 == 5 and scores[i + 1] < score:
+            if i_best is None:
+                i_best = i
+            elif scores[i_best] < score:
+                i_best = i
     # case when all requirements can't be met
     if i_best is None:
         return 0
