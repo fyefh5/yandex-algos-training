@@ -1,48 +1,58 @@
-def sequence_type(arr):
-    if len(arr) == 0 or len(arr) == 1:
-        return "RANDOM"
-    constant = True
-    ascending = True
-    weakly_ascending = True
-    descending = True
-    weakly_descending = True
-    for i in range(1,len(arr)):
-        if arr[i-1] == arr[i]:
-            ascending = False
-            descending = False
-        if arr[i-1] != arr[i]:
-            constant = False
-        if arr[i-1] >= arr[i] and ascending and not constant:
-            ascending = False
-        if arr[i-1] > arr[i] and weakly_ascending:
-            weakly_ascending = False
-        if arr[i-1] <= arr[i] and descending and not constant:
-            descending = False
-        if arr[i-1] < arr[i] and weakly_descending:
-            weakly_descending = False
-    if constant:
-        return "CONSTANT"
-    if ascending:
-        return "ASCENDING"
-    if weakly_ascending:
-        return "WEAKLY ASCENDING"
-    if descending:
-        return "DESCENDING"
-    if weakly_descending:
-        return "WEAKLY DESCENDING"
-    return "RANDOM"
+class Sequence:
+    previous = None
+    type = None
 
-assert sequence_type([-530, -530, -530, -530, -530]) == "CONSTANT"
+    def __init__(self, arr):
+        if arr:
+            for item in arr:
+                self.add(item)
+
+    def add(self, new_num):
+        if self.previous:
+            if new_num == self.previous:
+                if self.type is None:
+                    self.type = 'CONSTANT'
+                elif self.type == 'ASCENDING':
+                    self.type = 'WEAKLY ASCENDING'
+                elif self.type == 'DESCENDING':
+                    self.type = 'WEAKLY DESCENDING'
+            elif new_num > self.previous:
+                if self.type is None:
+                    self.type = 'ASCENDING'
+                elif self.type == 'WEAKLY DESCENDING' or self.type == 'DESCENDING':
+                    self.type = 'RANDOM'
+                elif self.type == 'CONSTANT':
+                    self.type = 'WEAKLY ASCENDING'
+            else:
+                if self.type is None:
+                    self.type = 'DESCENDING'
+                elif self.type == 'WEAKLY ASCENDING' or self.type == 'ASCENDING':
+                    self.type = 'RANDOM'
+                elif self.type == 'CONSTANT':
+                    self.type = 'WEAKLY DESCENDING'
+
+        self.previous = new_num
+
+
+assert Sequence([-530, -530, -530]).type == 'CONSTANT'
+assert Sequence([1, 7, 9]).type == 'ASCENDING'
+assert Sequence([1, 9, 7]).type == 'RANDOM'
+assert Sequence([2, 2, 2]).type == 'CONSTANT'
+assert Sequence([2, 2]).type == 'CONSTANT'
+assert Sequence([2, 2, 3]).type == 'WEAKLY ASCENDING'
+assert Sequence([3, 3, 2]).type == 'WEAKLY DESCENDING'
+assert Sequence([4, 3, 2]).type == 'DESCENDING'
+
 
 def main():
-    flag = True
-    arr = []
-    while flag:
-        elem = int(input())
-        if elem == -2000000000:
-            flag = False
-            print(sequence_type(arr))
-        arr.append(elem)
+    sequence = Sequence([])
+    while True:
+        new_num = int(input())
+        if new_num == -2000000000:
+            print(sequence.type)
+            break
+        sequence.add(new_num)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()
