@@ -13,7 +13,7 @@ def place(scores):
         score = scores[i]
         if score > scores[i_winner]:
             i_winner = i
-            i_best = None
+            i_best = None # need to restart counting because previous one is invalid now
         elif score % 10 == 5 and scores[i + 1] < score:
             if i_best is None:
                 i_best = i
